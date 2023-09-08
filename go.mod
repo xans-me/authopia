@@ -3,6 +3,8 @@ module github.com/xans-me/authopia
 go 1.21.0
 
 require (
+	github.com/Alter17Ego/go-dto-validator v1.0.1
+	github.com/Nerzal/gocloak/v7 v7.11.0
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.1
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
@@ -16,7 +18,9 @@ require (
 )
 
 require (
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/go-resty/resty/v2 v2.3.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jonboulle/clockwork v0.4.0 // indirect
@@ -25,6 +29,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/segmentio/ksuid v1.0.3 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect

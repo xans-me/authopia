@@ -1,0 +1,23 @@
+app:
+  name: AUTHOPIA
+  environment: development
+  host: 0.0.0.0
+  debug: true
+  port: 9090
+  protocol: tcp4
+keyCloak:
+  baseUrlAuth: http://localhost:8080
+  Realm: Development-CT
+  AdminUsername: dev_admin_ct
+  AdminPassword: Pa55w0rd00%
+  ClientID: ""
+  ClientSecret: "ae61a79c-b7f4-4bb2-a5a5-d5a806294f45"
+sqlDatabase:
+  connection: postgres
+  name: "development"
+  user: "development"
+  password: "secret00"
+  port: 5432
+  host: localhost
+  MaximumOpenConnection: 100
+  MaximumIdleConnection: 25
