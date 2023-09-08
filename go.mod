@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	github.com/Alter17Ego/go-dto-validator v1.0.1
+	github.com/Alter17Ego/secuware v1.0.0
 	github.com/Nerzal/gocloak/v7 v7.11.0
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.1
@@ -18,12 +19,17 @@ require (
 )
 
 require (
+	github.com/Alter17Ego/generic-app v1.0.0 // indirect
+	github.com/Alter17Ego/generic-http v1.0.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/go-chi/render v1.0.1 // indirect
 	github.com/go-resty/resty/v2 v2.3.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jonboulle/clockwork v0.4.0 // indirect
+	github.com/lestrrat-go/jwx v0.9.0 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
@@ -35,6 +41,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
+	github.com/unrolled/secure v1.0.8 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
