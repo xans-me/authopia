@@ -10,7 +10,7 @@ keyCloak:
   Realm: Development-CT
   AdminUsername: dev_admin_ct
   AdminPassword: Pa55w0rd00%
-  ClientID: ""
+  ClientID: "test"
   ClientSecret: "ae61a79c-b7f4-4bb2-a5a5-d5a806294f45"
 sqlDatabase:
   connection: postgres

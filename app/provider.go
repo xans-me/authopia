@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// ProvidePostgres is function to init postgres connection
+// ProvidePostgres is a function to init postgres connection
 func ProvidePostgres(config *configuration.AppConfig) *sql.DB {
 	return db.NewPostgres(config)
 }
@@ -25,7 +25,7 @@ func ProvideGRPC() *grpc.Server {
 	return configuration.NewGRPCServer()
 }
 
-// ProvideAppEnvironment is a function to provide app enviroment data
+// ProvideAppEnvironment is a function to provide app environment data
 func ProvideAppEnvironment() (environment.AppEnvironment, error) {
 	return environment.FromOsEnv()
 }
@@ -37,6 +37,11 @@ func ProvideAppEnvConfig(conf *configuration.AppConfig) configuration.AppConfig 
 
 // ProvideLogger is a function to log http request and deployment to a file
 func ProvideLogger(env environment.AppEnvironment) *logrus.Logger {
-	logger := logger.New(env, logger.FileTemplate("authopia-app-%Y_%m_%d"))
-	return logger
+	l := logger.New(env, logger.FileTemplate("authopia-app-%Y_%m_%d"))
+	return l
+}
+
+// ProvideKeycloakConfig is a function to provide keycloak environment
+func ProvideKeycloakConfig(conf *configuration.AppConfig) configuration.KeyCloak {
+	return conf.KeyCloak
 }

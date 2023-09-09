@@ -5,9 +5,9 @@ package app
 
 import (
 	"database/sql"
+	"github.com/xans-me/authopia/core/configuration"
+	"github.com/xans-me/authopia/core/environment"
 	"net"
-	"search-svc/infrastructure/configuration"
-	"search-svc/infrastructure/environment"
 
 	"github.com/google/wire"
 	"github.com/sirupsen/logrus"
@@ -23,6 +23,7 @@ var (
 		ProvidePostgres,
 		ProvideGRPC,
 		ProvideListener,
+		ProvideKeycloakConfig,
 	)
 )
 

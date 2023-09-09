@@ -7,8 +7,8 @@ import (
 	"github.com/Nerzal/gocloak/v7"
 )
 
-// IUsersService service interfaces
-type IUsersService interface {
+// IUseCase service interfaces
+type IUseCase interface {
 	Login(ctx context.Context, request UserLoginRequest) (*gocloak.JWT, error)
 	Register(context context.Context, request UserRegisterRequest) (*gocloak.JWT, error)
 }

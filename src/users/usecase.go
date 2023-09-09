@@ -8,15 +8,15 @@ import (
 	"strings"
 )
 
-// UserService struct
-type UserService struct {
+// UseCase struct
+type UseCase struct {
 	repository IUsersRepository
 	keycloak   configuration.KeyCloak
 	//monitoring      monitoring.ErrorMonitoring
 }
 
 // Login service function
-func (svc UserService) Login(context context.Context, request UserLoginRequest) (data *gocloak.JWT, err error) {
+func (svc UseCase) Login(context context.Context, request UserLoginRequest) (data *gocloak.JWT, err error) {
 
 	// data validation
 	err = request.FormValidate()
@@ -33,7 +33,7 @@ func (svc UserService) Login(context context.Context, request UserLoginRequest) 
 }
 
 // Register service function
-func (svc UserService) Register(context context.Context, request UserRegisterRequest) (data *gocloak.JWT, err error) {
+func (svc UseCase) Register(context context.Context, request UserRegisterRequest) (data *gocloak.JWT, err error) {
 
 	// request data validation
 	err = request.FormValidate()
@@ -84,7 +84,7 @@ func (svc UserService) Register(context context.Context, request UserRegisterReq
 	return svc.repository.LoginUserKeycloak(context, loginCredential)
 }
 
-// NewService function to init service instance
-func NewService(repository IUsersRepository, keycloak configuration.KeyCloak) *UserService {
-	return &UserService{repository: repository, keycloak: keycloak}
+// NewUseCase function to init useCase instance
+func NewUseCase(repository IUsersRepository, keycloak configuration.KeyCloak) *UseCase {
+	return &UseCase{repository: repository, keycloak: keycloak}
 }
