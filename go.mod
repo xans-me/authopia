@@ -23,6 +23,7 @@ require (
 	github.com/Alter17Ego/generic-http v1.0.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
+	github.com/felixge/httpsnoop v1.0.3
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-chi/render v1.0.1 // indirect
 	github.com/go-resty/resty/v2 v2.3.0 // indirect
