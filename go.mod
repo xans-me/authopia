@@ -6,13 +6,16 @@ require (
 	github.com/Alter17Ego/go-dto-validator v1.0.1
 	github.com/Alter17Ego/secuware v1.0.0
 	github.com/Nerzal/gocloak/v7 v7.11.0
+	github.com/felixge/httpsnoop v1.0.3
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.1
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lib/pq v1.10.9
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.9.3
+	github.com/soheilhy/cmux v0.1.5
 	github.com/spf13/viper v1.16.0
+	golang.org/x/sync v0.3.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d
 	google.golang.org/grpc v1.58.0
 	google.golang.org/protobuf v1.31.0
@@ -23,7 +26,6 @@ require (
 	github.com/Alter17Ego/generic-http v1.0.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
-	github.com/felixge/httpsnoop v1.0.3
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-chi/render v1.0.1 // indirect
 	github.com/go-resty/resty/v2 v2.3.0 // indirect

@@ -2,18 +2,19 @@ package main
 
 import (
 	"context"
-	"net/http"
-	"strings"
-
 	"github.com/felixge/httpsnoop"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	log "github.com/sirupsen/logrus"
+	"github.com/soheilhy/cmux"
 	"github.com/xans-me/authopia/app"
 	"github.com/xans-me/authopia/core/proto"
 	"github.com/xans-me/authopia/src/users"
+	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
+	"net/http"
+	"strings"
 )
 
 func main() {
@@ -23,19 +24,16 @@ func main() {
 		panic(err.Error())
 	}
 
-	log.Info("############################")
-	log.Info("AUTHOPIA")
-	log.Info("You app running on ", config.App.Environment, " mode")
-	log.Info("############################")
-
-	listerner := app.InjectListener()
 	// Inject RPC
 	usersRpc, err := users.InjectRPC()
 	if err != nil {
 		panic(err.Error())
 	}
-	usersRpc.RegisterRPC(listerner)
-	log.Info("Registering Handler User")
+
+	log.Info("############################")
+	log.Info("AUTHOPIA")
+	log.Info("You app running on ", config.App.Environment, " mode")
+	log.Info("############################")
 
 	// creating mux for gRPC gateway. This will multiplex or route request different gRPC service
 	mux := runtime.NewServeMux(
@@ -56,28 +54,38 @@ func main() {
 			// using default handler to do the rest of heavy lifting of marshaling error and adding headers
 			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaler, writer, request, &newError)
 		}))
-
-	log.Info("Registering Handler User")
-	proto.RegisterUserServiceHandlerFromEndpoint(
+	err = proto.RegisterUserServiceHandlerFromEndpoint(
 		context.Background(),
-		mux,
-		"localhost:8081",
-		[]grpc.DialOption{grpc.WithBlock(),
-			grpc.WithTransportCredentials(insecure.NewCredentials())})
-	log.Info("Registered Handler User")
+		mux, "localhost:8081",
+		[]grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
+	if err != nil {
+		panic(err.Error())
+	}
 
-	log.Info("Creating a Normal HTTP Server")
 	// Creating a normal HTTP server
-	server := http.Server{
+	httpServer := http.Server{
 		Handler: withLogger(mux),
 	}
-	log.Info("Created a Normal HTTP Server")
 
-	// start server
-	err = server.Serve(listerner)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// get listener
+	listener := app.InjectListener()
+
+	// Setup multiplexer connection
+	m := cmux.New(listener)
+	grpcListener := m.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
+	httpListener := m.Match(cmux.HTTP1Fast())
+
+	log.Info("ok")
+
+	//groups of goroutines working on subtask registry of multi connection
+	g := new(errgroup.Group)
+	g.Go(func() error { return usersRpc.RegisterRPC(grpcListener) })
+	g.Go(func() error {
+		return httpServer.Serve(httpListener)
+	})
+	g.Go(func() error { return m.Serve() })
+
+	log.Println(g.Wait())
 }
 
 func withLogger(handler http.Handler) http.Handler {
