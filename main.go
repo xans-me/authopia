@@ -35,7 +35,7 @@ func main() {
 	log.Info("You app running on ", config.App.Environment, " mode")
 	log.Info("############################")
 
-	// creating mux for gRPC gateway. This will multiplex or route request different gRPC service
+	// Creating mux for gRPC gateway. This will multiplex or route request different gRPC service
 	mux := runtime.NewServeMux(
 		// convert header in response(going from gateway) from metadata received.
 		runtime.WithOutgoingHeaderMatcher(isHeaderAllowed),
@@ -45,15 +45,16 @@ func main() {
 			md := metadata.Pairs("auth", header)
 			return md
 		}),
-		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaler runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
+		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaller runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
 			//creating a new HTTTPStatusError with a custom status, and passing error
 			newError := runtime.HTTPStatusError{
 				HTTPStatus: 400,
 				Err:        err,
 			}
 			// using default handler to do the rest of heavy lifting of marshaling error and adding headers
-			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaler, writer, request, &newError)
+			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaller, writer, request, &newError)
 		}))
+
 	err = proto.RegisterUserServiceHandlerFromEndpoint(
 		context.Background(),
 		mux, "localhost:8081",

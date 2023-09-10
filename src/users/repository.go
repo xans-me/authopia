@@ -94,7 +94,7 @@ func (repo Repository) GetCredentialUserKeycloak(context context.Context, UUID s
 	return client.GetCredentials(context, token.AccessToken, repo.keycloak.Realm, UUID)
 }
 
-// ExecuteForgotPassword to execute action of forgot password
+// ExecuteForgotPassword to execute action of forgotten password
 func (repo Repository) ExecuteForgotPassword(ctx context.Context, email string) (data interface{}, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
 	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)

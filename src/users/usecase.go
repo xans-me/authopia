@@ -46,7 +46,7 @@ func (svc UseCase) Register(context context.Context, request UserRegisterRequest
 		return
 	}
 
-	// checking if data is already exist
+	// checking if data is already existing
 	err = svc.repository.CheckingIsExistUsers(context, UserIdentityRequest{
 		Email:       request.Email,
 		PhoneNumber: request.PhoneNumber,
@@ -59,7 +59,7 @@ func (svc UseCase) Register(context context.Context, request UserRegisterRequest
 	_, err = svc.repository.RegisterUserKeycloak(context, request)
 	if err != nil {
 		result := strings.SplitAfterN(err.Error(), " ", 3)
-		// send message of error
+		// send a message of error
 		err = errors.New(result[2])
 		return
 	}
