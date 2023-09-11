@@ -4,7 +4,8 @@ package users
 
 import (
 	"context"
-	"github.com/Nerzal/gocloak/v7"
+
+	"github.com/Nerzal/gocloak/v13"
 )
 
 // IUseCase service interfaces

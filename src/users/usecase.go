@@ -3,9 +3,10 @@ package users
 import (
 	"context"
 	"errors"
+	"strings"
+
 	"github.com/Nerzal/gocloak/v7"
 	"github.com/xans-me/authopia/core/configuration"
-	"strings"
 )
 
 // UseCase struct

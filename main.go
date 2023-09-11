@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	log "github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
@@ -12,15 +14,13 @@ import (
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/metadata"
-	"net/http"
 )
 
 func main() {
 	// initialize config
 	config, err := app.InitializeAppConfig()
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 
 	// Inject RPC
@@ -37,13 +37,13 @@ func main() {
 	// Creating mux for gRPC gateway. This will multiplex or route request different gRPC service
 	mux := runtime.NewServeMux(
 		// convert header in response(going from gateway) from metadata received.
-		runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
-		runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
-			header := request.Header.Get("Authorization")
-			// send all the headers received from the client
-			md := metadata.Pairs("auth", header)
-			return md
-		}),
+		// runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
+		// runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
+		// 	header := request.Header.Get("Authorization")
+		// 	// send all the headers received from the client
+		// 	md := metadata.Pairs("auth", header)
+		// 	return md
+		// }),
 		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaller runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
 			//creating a new HTTTPStatusError with a custom status, and passing error
 			newError := runtime.HTTPStatusError{
@@ -56,7 +56,7 @@ func main() {
 
 	err = proto.RegisterUserServiceHandlerFromEndpoint(
 		context.Background(),
-		mux, "localhost:8081",
+		mux, "localhost:9091",
 		[]grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
 	if err != nil {
 		log.Fatal(err)

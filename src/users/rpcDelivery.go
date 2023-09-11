@@ -3,13 +3,14 @@ package users
 import (
 	"context"
 	"fmt"
+	"net"
+
 	"github.com/xans-me/authopia/core/proto"
 	"github.com/xans-me/authopia/helpers/times"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
-	"net"
 )
 
 type RpcDelivery struct {
@@ -28,6 +29,7 @@ func (r *RpcDelivery) Register(ctx context.Context, request *proto.UserRegisterR
 		PhoneNumber: request.GetPhoneNumber(),
 	})
 	if err != nil {
+		fmt.Print(err)
 		return nil, status.Errorf(codes.Internal, fmt.Sprintf("internal error: %v", err))
 	}
 

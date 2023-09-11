@@ -8,15 +8,15 @@ app:
 keyCloak:
   baseUrlAuth: http://localhost:8080
   Realm: Development-CT
-  AdminUsername: dev_admin_ct
-  AdminPassword: Pa55w0rd00%
-  ClientID: "test"
-  ClientSecret: "ae61a79c-b7f4-4bb2-a5a5-d5a806294f45"
+  AdminUsername: admin
+  AdminPassword: password
+  ClientID: "account"
+  ClientSecret: "sk2pWyqaRxN3Ho1cawnWp5qSDTZYS1Kn"
 sqlDatabase:
   connection: postgres
   name: "development"
-  user: "development"
-  password: "secret00"
+  user: "developmentUser"
+  password: "password"
   port: 5432
   host: localhost
   MaximumOpenConnection: 100

@@ -16,7 +16,6 @@ func NewPostgres(conf *configuration.AppConfig) *sql.DB {
 	switch conf.SQLDatabase.Connection {
 	case "postgres":
 		connInfo = fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", conf.SQLDatabase.Host, conf.SQLDatabase.Port, conf.SQLDatabase.User, conf.SQLDatabase.Name, conf.SQLDatabase.Password)
-		break
 	}
 
 	db, err := sql.Open(conf.SQLDatabase.Connection, connInfo)
