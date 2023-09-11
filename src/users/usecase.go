@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/Nerzal/gocloak/v7"
+	"github.com/Nerzal/gocloak/v13"
 	"github.com/xans-me/authopia/core/configuration"
 )
 
