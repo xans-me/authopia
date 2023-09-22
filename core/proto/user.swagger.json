@@ -1,11 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Simple Auth API",
-    "version": "1.2",
+    "title": "Authopia API",
+    "version": "1.0",
     "contact": {
-      "name": "authopia",
-      "url": "https://github.com/xans-me"
+      "name": "Mulia Ichsan",
+      "url": "https://github.com/xans-me",
+      "email": "mulia.ichsan17@gmail.com"
     }
   },
   "tags": [
@@ -56,8 +57,8 @@
     },
     "/api/auth/register": {
       "post": {
-        "summary": "Create new user",
-        "description": "Use this API to create a new user",
+        "summary": "Register new user",
+        "description": "Use this API to register a new user",
         "operationId": "UserService_Register",
         "responses": {
           "200": {

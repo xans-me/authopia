@@ -12,12 +12,12 @@ option go_package = "github.com/Alter17Ego/authopia/core/proto";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-        title: "Simple Bank API",
-        version: "1.2",
+        title: "Authopia API",
+        version: "1.0",
         contact: {
-            name: "Tech School",
-            url: "https://github.com/techschool",
-            email: "techschool.guru@gmail.com"
+            name: "Mulia Ichsan",
+            url: "https://github.com/xans-me",
+            email: "mulia.ichsan17@gmail.com"
         }
     }
 };
@@ -53,8 +53,8 @@ service UserService {
             body: "*"
         };
          option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            description: "Use this API to create a new user",
-            summary: "Create new user"
+            description: "Use this API to register a new user",
+            summary: "Register new user"
         };
     }
 
