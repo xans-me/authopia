@@ -75,10 +75,8 @@ func (svc UseCase) Register(context context.Context, request UserRegisterRequest
 
 	// build data for user auto login after register
 	loginCredential := UserLoginRequest{
-		ClientID:     svc.keycloak.ClientID,
-		ClientSecret: svc.keycloak.ClientSecret,
-		Username:     request.Email,
-		Password:     request.Password,
+		Username: request.Email,
+		Password: request.Password,
 	}
 
 	// do auto login to response a access token

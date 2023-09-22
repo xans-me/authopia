@@ -1,11 +1,10 @@
 module github.com/xans-me/authopia
 
-go 1.21.0
+go 1.20
 
 require (
 	github.com/Alter17Ego/go-dto-validator v1.0.1
 	github.com/Alter17Ego/secuware v1.0.0
-	github.com/Nerzal/gocloak/v7 v7.11.0
 	github.com/felixge/httpsnoop v1.0.3
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.1
@@ -31,7 +30,6 @@ require (
 	github.com/Alter17Ego/generic-http v1.0.0 // indirect
 	github.com/Nerzal/gocloak/v13 v13.8.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-chi/render v1.0.1 // indirect
 	github.com/go-resty/resty/v2 v2.7.0 // indirect
@@ -44,7 +42,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/rakyll/statik v0.1.7
 	github.com/segmentio/ksuid v1.0.4 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect

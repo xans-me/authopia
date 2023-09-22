@@ -1,8 +1,9 @@
 package users
 
 import (
-	"github.com/Alter17Ego/go-dto-validator"
 	"strings"
+
+	"github.com/Alter17Ego/go-dto-validator"
 )
 
 // AuthDataRequest struct
@@ -19,10 +20,8 @@ func (request *AuthDataRequest) FormValidate() (err error) {
 
 // UserLoginRequest struct
 type UserLoginRequest struct {
-	ClientID     string `json:"clientId" field:"required"`
-	ClientSecret string `json:"clientSecret"`
-	Username     string `json:"username" field:"required"`
-	Password     string `json:"password" field:"required" min:"6"`
+	Username string `json:"username" field:"required"`
+	Password string `json:"password" field:"required" min:"6"`
 }
 
 // FormValidate method for UserLoginRequest

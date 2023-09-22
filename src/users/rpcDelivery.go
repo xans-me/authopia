@@ -44,7 +44,6 @@ func (r *RpcDelivery) Register(ctx context.Context, request *proto.UserRegisterR
 
 func (r *RpcDelivery) Login(ctx context.Context, request *proto.UserLoginRequest) (*proto.AuthResponse, error) {
 	data, err := r.uc.Login(ctx, UserLoginRequest{
-		ClientID: request.GetClientId(),
 		Username: request.GetUsername(),
 		Password: request.GetPassword(),
 	})

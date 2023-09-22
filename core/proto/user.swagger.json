@@ -121,9 +121,6 @@
         },
         "password": {
           "type": "string"
-        },
-        "clientId": {
-          "type": "string"
         }
       }
     },
