@@ -25,7 +25,7 @@ func (repo Repository) LoginAdminKeycloak(ctx context.Context, request UserLogin
 // LoginUserKeycloak repo func
 func (repo Repository) LoginUserKeycloak(ctx context.Context, request UserLoginRequest) (data *gocloak.JWT, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	return client.Login(ctx, request.ClientID, request.ClientSecret, repo.keycloak.Realm, request.Username, request.Password)
+	return client.Login(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm, request.Username, request.Password)
 }
 
 // RegisterUserKeycloak repo func

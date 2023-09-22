@@ -7,11 +7,11 @@ app:
   protocol: tcp4
 keyCloak:
   baseUrlAuth: http://localhost:8080
-  Realm: Development-CT
-  AdminUsername: admin
+  Realm: "aphrodite-iam"
+  AdminUsername: ichsan.mulya@outlook.com
   AdminPassword: password
-  ClientID: "account"
-  ClientSecret: "sk2pWyqaRxN3Ho1cawnWp5qSDTZYS1Kn"
+  ClientID: "aphrodite-be"
+  ClientSecret: "ygDCwirAHjcvf5BWQcDGiYLmr3DMgFso"
 sqlDatabase:
   connection: postgres
   name: "development"
