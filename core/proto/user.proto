@@ -7,6 +7,18 @@ package proto;
 
 option go_package = "github.com/Alter17Ego/authopia/core/proto";
 import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        title: "Simple Auth API";
+        version: "1.2";
+        contact: {
+            name: "authopia";
+            url: "https://github.com/xans-me";
+        };
+    };
+};
 
 message UserRegisterRequest {
     string email = 1;
@@ -37,11 +49,19 @@ service UserService {
             post: "/api/auth/register",
             body: "*"
         };
+         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Use this API to create a new user";
+            summary: "Create new user";
+        };
     }
     rpc Login(UserLoginRequest) returns(AuthResponse) {
         option(google.api.http) = {
             post: "/api/auth/login",
             body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Use this API to login user and get access token & refresh token";
+            summary: "Login user";
         };
     }
 }

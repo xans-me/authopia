@@ -34,8 +34,17 @@ func main() {
 	log.Info("You app running on ", config.App.Environment, " mode")
 	log.Info("############################")
 
+	jsonOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{
+			UseProtoNames: true,
+		},
+		UnmarshalOptions: protojson.UnmarshalOptions{
+			DiscardUnknown: true,
+		},
+	})
+
 	// Creating mux for gRPC gateway. This will multiplex or route request different gRPC service
-	mux := runtime.NewServeMux(
+	grpcMux := runtime.NewServeMux(jsonOption,
 		// convert header in response(going from gateway) from metadata received.
 		// runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
 		// runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
@@ -54,13 +63,29 @@ func main() {
 			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaller, writer, request, &newError)
 		}))
 
-	err = proto.RegisterUserServiceHandlerFromEndpoint(
-		context.Background(),
-		mux, "localhost:9091",
-		[]grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
+	// err = proto.RegisterUserServiceHandlerFromEndpoint(
+	// 	context.Background(),
+	// 	mux, "localhost:9091",
+	// 	[]grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	err = proto.RegisterUserServiceHandlerServer(context.Background(), grpcMux, usersRpc)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	mux := http.NewServeMux()
+	mux.Handle("/", grpcMux)
+
+	statikFS, err := fs.New()
+	if err != nil {
+		log.Fatal().Err(err).Msg("cannot create statik fs")
+	}
+
+	swaggerHandler := http.StripPrefix("/swagger/", http.FileServer(statikFS))
+	mux.Handle("/swagger/", swaggerHandler)
 
 	// Creating a normal HTTP server
 	httpServer := http.Server{
