@@ -12,8 +12,8 @@ import (
 	http2 "github.com/xans-me/authopia/helpers/http"
 	"github.com/xans-me/authopia/src/users"
 	"golang.org/x/sync/errgroup"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func main() {
@@ -46,13 +46,13 @@ func main() {
 	// Creating mux for gRPC gateway. This will multiplex or route request different gRPC service
 	grpcMux := runtime.NewServeMux(jsonOption,
 		// convert header in response(going from gateway) from metadata received.
-		// runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
-		// runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
-		// 	header := request.Header.Get("Authorization")
-		// 	// send all the headers received from the client
-		// 	md := metadata.Pairs("auth", header)
-		// 	return md
-		// }),
+		runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
+		runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
+			header := request.Header.Get("Authorization")
+			// send all the headers received from the client
+			md := metadata.Pairs("auth", header)
+			return md
+		}),
 		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaller runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
 			//creating a new HTTTPStatusError with a custom status, and passing error
 			newError := runtime.HTTPStatusError{
@@ -63,14 +63,6 @@ func main() {
 			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaller, writer, request, &newError)
 		}))
 
-	// err = proto.RegisterUserServiceHandlerFromEndpoint(
-	// 	context.Background(),
-	// 	mux, "localhost:9091",
-	// 	[]grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
 	err = proto.RegisterUserServiceHandlerServer(context.Background(), grpcMux, usersRpc)
 	if err != nil {
 		log.Fatal(err)
@@ -79,13 +71,13 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", grpcMux)
 
-	statikFS, err := fs.New()
-	if err != nil {
-		log.Fatal().Err(err).Msg("cannot create statik fs")
-	}
-
-	swaggerHandler := http.StripPrefix("/swagger/", http.FileServer(statikFS))
-	mux.Handle("/swagger/", swaggerHandler)
+	// for handling swagger
+	// statikFS, err := fs.New()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// swaggerHandler := http.StripPrefix("/swagger/", http.FileServer(statikFS))
+	// mux.Handle("/swagger/", swaggerHandler)
 
 	// Creating a normal HTTP server
 	httpServer := http.Server{
