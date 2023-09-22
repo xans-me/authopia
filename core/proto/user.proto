@@ -32,7 +32,6 @@ message UserRegisterRequest {
 message UserLoginRequest{
     string username = 1;
     string password = 2;
-    string clientId = 3;
 }
 
 message Token {

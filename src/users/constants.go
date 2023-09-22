@@ -13,7 +13,7 @@ const (
 )
 
 var (
-	SenyumkuLiteGroupKeycloak  = "Senyumku lite users"
+	AuthopiaGroupKeycloak      = "Authopia users"
 	LifespanActionEmail        = 500
 	DefaultUserEnabledKeycloak = true
 	DefaultUserEmailVerified   = false

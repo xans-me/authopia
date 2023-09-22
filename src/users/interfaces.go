@@ -16,14 +16,13 @@ type IUseCase interface {
 
 // IUsersRepository repository interfaces
 type IUsersRepository interface {
-	LoginAdminKeycloak(ctx context.Context, request UserLoginRequest) (interface{}, error)
-	LoginUserKeycloak(ctx context.Context, request UserLoginRequest) (*gocloak.JWT, error)
-	RegisterUserKeycloak(ctx context.Context, request UserRegisterRequest) (interface{}, error)
-	ChangePasswordUserKeycloak(ctx context.Context, request UserPasswordChangeRequest) error
-	UpdateUserKeycloak(ctx context.Context, userData gocloak.User) error
-	GetCredentialUserKeycloak(ctx context.Context, UUID string) ([]*gocloak.CredentialRepresentation, error)
-	ExecuteForgotPassword(ctx context.Context, email string) (interface{}, error)
-	ExecuteResendVerifyEmail(ctx context.Context, email string) (interface{}, error)
-	AssignUserToGroupKeycloak(ctx context.Context, userID string) error
-	CheckingIsExistUsers(ctx context.Context, request UserIdentityRequest) error
+	LoginUserKeycloak(ctx context.Context, request UserLoginRequest) (data *gocloak.JWT, err error)
+	RegisterUserKeycloak(ctx context.Context, request UserRegisterRequest) (data interface{}, err error)
+	ChangePasswordUserKeycloak(ctx context.Context, request UserPasswordChangeRequest) (err error)
+	UpdateUserKeycloak(ctx context.Context, userData gocloak.User) (err error)
+	GetCredentialUserKeycloak(ctx context.Context, UUID string) (representations []*gocloak.CredentialRepresentation, err error)
+	ExecuteForgotPassword(ctx context.Context, email string) (data interface{}, err error)
+	ExecuteResendVerifyEmail(ctx context.Context, email string) (data interface{}, err error)
+	AssignUserToGroupKeycloak(ctx context.Context, userID string) (err error)
+	CheckingIsExistUsers(ctx context.Context, request UserIdentityRequest) (err error)
 }

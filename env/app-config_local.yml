@@ -8,8 +8,6 @@ app:
 keyCloak:
   baseUrlAuth: http://localhost:8080
   Realm: "aphrodite-iam"
-  AdminUsername: ichsan.mulya@outlook.com
-  AdminPassword: password
   ClientID: "aphrodite-be"
   ClientSecret: "ygDCwirAHjcvf5BWQcDGiYLmr3DMgFso"
 sqlDatabase:
