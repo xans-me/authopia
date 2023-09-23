@@ -14,6 +14,7 @@ const (
 
 var (
 	AuthopiaGroupKeycloak      = "Authopia users"
+	AuthopiaRolesSigner        = "ROLE_SIGNER"
 	LifespanActionEmail        = 500
 	DefaultUserEnabledKeycloak = true
 	DefaultUserEmailVerified   = false

@@ -40,6 +40,7 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 		Enabled:         &DefaultUserEnabledKeycloak,
 		EmailVerified:   &DefaultUserEmailVerified,
 		Username:        &request.PhoneNumber,
+		RealmRoles:      &[]string{AuthopiaRolesSigner},
 		RequiredActions: &[]string{},
 	}
 
@@ -74,6 +75,7 @@ func (repo Repository) UpdateUserKeycloak(ctx context.Context, userData gocloak.
 	if err != nil {
 		return err
 	}
+
 	err = client.UpdateUser(ctx, token.AccessToken, repo.keycloak.Realm, userData)
 	return
 }
