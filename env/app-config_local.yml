@@ -11,7 +11,7 @@ keyCloak:
   ClientID: "aphrodite-be"
   ClientSecret: "ygDCwirAHjcvf5BWQcDGiYLmr3DMgFso"
   AdminUsername: ichsan.mulya@outlook.com
-  AdminPassword: password
+  AdminPassword: 00Exploit
 sqlDatabase:
   connection: postgres
   name: "development"

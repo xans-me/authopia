@@ -2,6 +2,7 @@ package users
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -26,6 +27,7 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
 	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
+		fmt.Println("login admin", err)
 		return nil, err
 	}
 
@@ -44,6 +46,7 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 	// register user to keycloak
 	data, err = client.CreateUser(ctx, token.AccessToken, repo.keycloak.Realm, user)
 	if err != nil {
+		fmt.Println("create user", err)
 		return nil, err
 	}
 
