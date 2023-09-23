@@ -10,6 +10,8 @@ keyCloak:
   Realm: "aphrodite-iam"
   ClientID: "aphrodite-be"
   ClientSecret: "ygDCwirAHjcvf5BWQcDGiYLmr3DMgFso"
+  AdminUsername: ichsan.mulya@outlook.com
+  AdminPassword: password
 sqlDatabase:
   connection: postgres
   name: "development"

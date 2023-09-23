@@ -19,10 +19,12 @@ type App struct {
 
 // KeyCloak struct model, contains configuration for keycloak. Keycloak is an open source identity and access management
 type KeyCloak struct {
-	BaseURLAuth  string
-	Realm        string
-	ClientID     string
-	ClientSecret string
+	BaseURLAuth   string
+	Realm         string
+	ClientID      string
+	ClientSecret  string
+	AdminUsername string
+	AdminPassword string
 }
 
 // SQLDatabase struct model, this is configuration for postgresql, storing relational data

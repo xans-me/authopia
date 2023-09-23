@@ -24,7 +24,7 @@ func (repo Repository) LoginUserKeycloak(ctx context.Context, request UserLoginR
 // RegisterUserKeycloak repo func
 func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserRegisterRequest) (data interface{}, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 // ChangePasswordUserKeycloak repo func
 func (repo Repository) ChangePasswordUserKeycloak(ctx context.Context, request UserPasswordChangeRequest) (err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (repo Repository) ChangePasswordUserKeycloak(ctx context.Context, request U
 // UpdateUserKeycloak repo func
 func (repo Repository) UpdateUserKeycloak(ctx context.Context, userData gocloak.User) (err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (repo Repository) UpdateUserKeycloak(ctx context.Context, userData gocloak.
 // GetCredentialUserKeycloak repo func
 func (repo Repository) GetCredentialUserKeycloak(ctx context.Context, UUID string) (representations []*gocloak.CredentialRepresentation, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return representations, err
 	}
@@ -89,7 +89,7 @@ func (repo Repository) GetCredentialUserKeycloak(ctx context.Context, UUID strin
 // ExecuteForgotPassword to execute action of forgotten password
 func (repo Repository) ExecuteForgotPassword(ctx context.Context, email string) (data interface{}, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func (repo Repository) ExecuteForgotPassword(ctx context.Context, email string) 
 // ExecuteResendVerifyEmail to execute action resend verify email of users
 func (repo Repository) ExecuteResendVerifyEmail(ctx context.Context, email string) (data interface{}, err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (repo Repository) ExecuteResendVerifyEmail(ctx context.Context, email strin
 func (repo Repository) AssignUserToGroupKeycloak(ctx context.Context, userID string) (err error) {
 	// Assign User to Groups => Senyumku lite users
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	token, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return
 	}
@@ -195,7 +195,7 @@ func (repo Repository) AssignUserToGroupKeycloak(ctx context.Context, userID str
 // CheckingIsExistUsers is a repo func to get user info from keycloak
 func (repo Repository) CheckingIsExistUsers(ctx context.Context, request UserIdentityRequest) (err error) {
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
-	dataJWT, err := client.LoginClient(ctx, repo.keycloak.ClientID, repo.keycloak.ClientSecret, repo.keycloak.Realm)
+	dataJWT, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
 		return
 	}
