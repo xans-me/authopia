@@ -2,7 +2,6 @@ package users
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -27,7 +26,12 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 	client := gocloak.NewClient(repo.keycloak.BaseURLAuth)
 	token, err := client.LoginAdmin(ctx, repo.keycloak.AdminUsername, repo.keycloak.AdminPassword, repo.keycloak.Realm)
 	if err != nil {
-		fmt.Println("login admin", err)
+		return nil, err
+	}
+
+	// get roles to assign
+	roles, err := client.GetRealmRole(ctx, token.AccessToken, repo.keycloak.Realm, AuthopiaRolesSigner)
+	if err != nil {
 		return nil, err
 	}
 
@@ -40,17 +44,20 @@ func (repo Repository) RegisterUserKeycloak(ctx context.Context, request UserReg
 		Enabled:         &DefaultUserEnabledKeycloak,
 		EmailVerified:   &DefaultUserEmailVerified,
 		Username:        &request.PhoneNumber,
-		RealmRoles:      &[]string{AuthopiaRolesSigner},
 		RequiredActions: &[]string{},
 	}
 
 	// register user to keycloak
 	data, err = client.CreateUser(ctx, token.AccessToken, repo.keycloak.Realm, user)
 	if err != nil {
-		fmt.Println("create user", err)
 		return nil, err
 	}
 
+	// add realm roles to roles
+	err = client.AddRealmRoleToUser(ctx, token.AccessToken, repo.keycloak.Realm, data.(string), []gocloak.Role{*roles})
+	if err != nil {
+		return nil, err
+	}
 	// set user password
 	err = client.SetPassword(ctx, token.AccessToken, data.(string), repo.keycloak.Realm, request.Password, false)
 	return
