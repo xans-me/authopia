@@ -48,7 +48,7 @@ message ErrorInfo {
     string code = 1;
     string description = 2;
     string message = 3;
-  }
+}
 
 service UserService {
 

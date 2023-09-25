@@ -71,7 +71,30 @@ func (r *RpcDelivery) Login(ctx context.Context, request *proto.UserLoginRequest
 	})
 
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "Internal error: %v", err)
+		// Customize the error message based on the error type
+		var code codes.Code
+		var description, message string
+
+		switch {
+		case errors.Is(err, ErrPhoneIsExist):
+			code = codes.AlreadyExists
+			description = "ALREADY_EXISTS"
+			message = "Phone number is already registered"
+		default:
+			code = codes.Internal
+			description = "INTERNAL"
+			message = "Internal server error"
+		}
+
+		// Create a custom error status with JSON message
+		st := status.New(code, message)
+		st, _ = st.WithDetails(&proto.ErrorInfo{
+			Code:        code.String(),
+			Description: description,
+			Message:     message,
+		})
+
+		return nil, st.Err()
 	}
 
 	return &proto.AuthResponse{
