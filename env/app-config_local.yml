@@ -1,10 +1,10 @@
 app:
   name: AUTHOPIA
   environment: local
-  host: 127.0.0.1
+  host: 0.0.0.0
   debug: true
   port: 9090
-  protocol: udp4
+  protocol: tcp4
 keyCloak:
   baseUrlAuth: http://localhost:8080
   Realm: "aphrodite-iam"
