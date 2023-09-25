@@ -17,8 +17,12 @@ func ProvidePostgres(config *configuration.AppConfig) *sql.DB {
 	return db.NewPostgres(config)
 }
 
+// func ProvideListener(config *configuration.AppConfig) net.Listener {
+// 	return configuration.ListenGRPC(config)
+// }
+
 func ProvideListener(config *configuration.AppConfig) net.Listener {
-	return configuration.ListenGRPC(config)
+	return configuration.ListenQGRPC(config, "", "")
 }
 
 func ProvideGRPC() *grpc.Server {
