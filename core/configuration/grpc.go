@@ -6,6 +6,8 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/pem"
+	"flag"
+	"fmt"
 	"math/big"
 	"net"
 
@@ -16,6 +18,10 @@ import (
 
 	// used for side effects
 	_ "net/http/pprof"
+)
+
+var (
+	addr = flag.String("addr", ":9090", "server address")
 )
 
 func NewGRPCServer() *grpc.Server {
@@ -40,9 +46,10 @@ func ListenQGRPC(conf *AppConfig, certFile, keyFile string) net.Listener {
 		log.Fatalf("QServer + gRPC => failed to generateTLSConfig. %s", err.Error())
 	}
 
-	addr := conf.App.Host + ":" + conf.App.Port
+	// addr := conf.App.Host + ":" + conf.App.Port
 
-	qListener, err := quic.ListenAddr(addr, tlsConf, nil)
+	fmt.Print(tlsConf)
+	qListener, err := quic.ListenAddr(*addr, tlsConf, nil)
 	if err != nil {
 		log.Fatalf("QServer + gRPC => failed to ListenAddr. %s", err.Error())
 	}

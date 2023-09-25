@@ -87,6 +87,8 @@ func main() {
 	// get listener
 	listener := app.InjectListener()
 
+	log.Printf("QServer + gRPC => Success listening at %v", listener.Addr())
+
 	// Setup multiplexer connection
 	m := cmux.New(listener)
 	grpcListener := m.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
