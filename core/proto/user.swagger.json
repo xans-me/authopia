@@ -99,6 +99,37 @@
         },
         "timeIn": {
           "type": "string"
+        },
+        "error": {
+          "$ref": "#/definitions/protoError"
+        }
+      }
+    },
+    "protoError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nestedErrors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stack": {
+          "type": "string",
+          "format": "byte"
         }
       }
     },
