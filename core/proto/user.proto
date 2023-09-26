@@ -42,13 +42,9 @@ message Token {
 message AuthResponse {
     Token result = 1;
     string timeIn = 2;
+    Error error = 3;
 }
 
-message ErrorInfo {
-    string code = 1;
-    string description = 2;
-    string message = 3;
-}
 
 service UserService {
 

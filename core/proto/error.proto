@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option go_package = "github.com/Alter17Ego/authopia/core/proto";
+
+
+message Error {
+    string message = 1;
+    int32 code = 2;
+    map<string, string> nested_errors = 3;
+    repeated string details = 4;
+    bytes stack = 5 [(gogoproto.customtype) = "Stack"];
+}
