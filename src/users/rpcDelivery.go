@@ -45,7 +45,7 @@ func (r *RpcDelivery) Register(ctx context.Context, request *proto.UserRegisterR
 		}
 
 		// Create a custom error status with JSON message
-		st := status.New(code, message)
+		st := status.Newf(code, err.Error())
 		st, _ = st.WithDetails(&proto.ErrorInfo{
 			Code:        code.String(),
 			Description: description,
@@ -87,7 +87,7 @@ func (r *RpcDelivery) Login(ctx context.Context, request *proto.UserLoginRequest
 		}
 
 		// Create a custom error status with JSON message
-		st := status.New(code, message)
+		st := status.Newf(code, err.Error())
 		st, _ = st.WithDetails(&proto.ErrorInfo{
 			Code:        code.String(),
 			Description: description,

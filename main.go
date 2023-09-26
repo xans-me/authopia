@@ -39,7 +39,8 @@ func main() {
 	// JSON Marshalling options
 	jsonOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
 		MarshalOptions: protojson.MarshalOptions{
-			UseProtoNames: true,
+			UseProtoNames:   true,
+			EmitUnpopulated: true,
 		},
 		UnmarshalOptions: protojson.UnmarshalOptions{
 			DiscardUnknown: true,
@@ -48,6 +49,7 @@ func main() {
 
 	// Create a ServeMux for gRPC Gateway
 	grpcMux := runtime.NewServeMux(jsonOption,
+		// runtime.WithForwardResponseOption(GRPCGatewayHTTPResponseModifier),
 		// Convert headers in response (going from gateway) from metadata received.
 		runtime.WithOutgoingHeaderMatcher(http2.IsHeaderAllowed),
 		runtime.WithMetadata(func(ctx context.Context, request *http.Request) metadata.MD {
