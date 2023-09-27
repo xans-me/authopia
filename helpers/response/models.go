@@ -1,5 +1,7 @@
 package response
 
+import "google.golang.org/genproto/googleapis/rpc/code"
+
 // Struct model response
 type Struct struct {
 	Data   interface{} `json:"result"`
@@ -8,9 +10,9 @@ type Struct struct {
 
 // ErrorStruct model response
 type ErrorStruct struct {
-	ErrorCode   int    `json:"errorCode"`
-	Description string `json:"description"`
-	Message     string `json:"message"`
+	ErrorCode   code.Code `json:"errorCode"`
+	Description string    `json:"description"`
+	Message     string    `json:"message"`
 }
 
 // we implement the built-in package 'error' interface by creating this function

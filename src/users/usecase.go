@@ -19,10 +19,10 @@ type UseCase struct {
 // Login service function
 func (svc UseCase) Login(context context.Context, request UserLoginRequest) (data *gocloak.JWT, err error) {
 
-	// data validation
+	// request data validation
 	err = request.FormValidate()
 	if err != nil {
-		return
+		return nil, ErrDecodeRequestData
 	}
 
 	// converted phone input with area number
@@ -39,12 +39,12 @@ func (svc UseCase) Register(context context.Context, request UserRegisterRequest
 	// request data validation
 	err = request.FormValidate()
 	if err != nil {
-		return
+		return nil, ErrDecodeRequestData
 	}
 
 	request.PhoneNumber, err = ConvertPhoneNumberToIndonesianArea(request.PhoneNumber)
 	if err != nil {
-		return
+		return nil, ErrDecodeRequestData
 	}
 
 	// checking if data is already existing
@@ -53,7 +53,7 @@ func (svc UseCase) Register(context context.Context, request UserRegisterRequest
 		PhoneNumber: request.PhoneNumber,
 	})
 	if err != nil {
-		return
+		return nil, ErrBusinessLogic
 	}
 
 	// user registration to keycloak

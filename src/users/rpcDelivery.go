@@ -31,25 +31,23 @@ func (r *RpcDelivery) Register(ctx context.Context, request *proto.UserRegisterR
 	if err != nil {
 		// Customize the error message based on the error type
 		var code codes.Code
-		var description, message string
+		var description string
 
 		switch {
 		case errors.Is(err, ErrPhoneIsExist):
 			code = codes.AlreadyExists
-			description = "ALREADY_EXISTS"
-			message = "Phone number is already registered"
+			description = codes.AlreadyExists.String()
 		default:
-			code = codes.Internal
-			description = "INTERNAL"
-			message = "Internal server error"
+			code = codes.InvalidArgument
+			description = codes.InvalidArgument.String()
 		}
 
 		// Create a custom error status with JSON message
 		st := status.Newf(code, err.Error())
 		st, _ = st.WithDetails(&proto.ErrorInfo{
-			Code:        code.String(),
+			Code:        uint32(code),
 			Description: description,
-			Message:     message,
+			Message:     err.Error(),
 		})
 
 		return nil, st.Err()
@@ -71,27 +69,13 @@ func (r *RpcDelivery) Login(ctx context.Context, request *proto.UserLoginRequest
 	})
 
 	if err != nil {
-		// Customize the error message based on the error type
-		var code codes.Code
-		var description, message string
-
-		switch {
-		case errors.Is(err, ErrPhoneIsExist):
-			code = codes.AlreadyExists
-			description = "ALREADY_EXISTS"
-			message = "Phone number is already registered"
-		default:
-			code = codes.Internal
-			description = "INTERNAL"
-			message = "Internal server error"
-		}
 
 		// Create a custom error status with JSON message
-		st := status.Newf(code, err.Error())
+		st := status.Newf(codes.Unauthenticated, err.Error())
 		st, _ = st.WithDetails(&proto.ErrorInfo{
-			Code:        code.String(),
-			Description: description,
-			Message:     message,
+			Code:        uint32(codes.Unauthenticated),
+			Description: codes.Unauthenticated.String(),
+			Message:     err.Error(),
 		})
 
 		return nil, st.Err()
