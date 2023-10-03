@@ -29,7 +29,7 @@ jobs:
           tags: muliaichsan17/authopia-images:app-${{ github.run_number }}
 
   updateManifest:
-    needs: build-and-deploy
+    needs: buildPushToDocker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
