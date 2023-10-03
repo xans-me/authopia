@@ -28,25 +28,25 @@ jobs:
           push: true
           tags: muliaichsan17/authopia-images:app-${{ github.run_number }}
 
-    modifygit:
-      needs: build-and-deploy
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-          name: changing the deployment of git repo
-          with:
-            repository: 'xans-cd/authopia-helm'
-            token: ${{ secrets.GIT_PASSWORD }}
-        - name: modify the image
-          run: |
-            git config user.email tanmay8928@gmail.com
-            sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.run_number }}'|' values.yaml 
-            git config --global user.name 'GitHub Actions'
-            git config --global user.email 'actions@github.com'
-            git add values.yaml
-            git commit -m 'Done  by Github Actions Job changemanifest: ${{ github.run_number }}'
-            git push origin main
-          env:
-            GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-            GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-            RUN_NUMBER: ${{ github.run_number }}
+  modifygit:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: changing the deployment of git repo
+        with:
+          repository: 'xans-cd/authopia-helm'
+          token: ${{ secrets.GIT_PASSWORD }}
+      - name: modify the image
+        run: |
+          git config user.email tanmay8928@gmail.com
+          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.run_number }}'|' values.yaml 
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add values.yaml
+          git commit -m 'Done  by Github Actions Job changemanifest: ${{ github.run_number }}'
+          git push origin main
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+          RUN_NUMBER: ${{ github.run_number }}
