@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-deploy:
+  buildPushToDocker:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +28,7 @@ jobs:
           push: true
           tags: muliaichsan17/authopia-images:app-${{ github.run_number }}
 
-  modifygit:
+  updateManifest:
     needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
