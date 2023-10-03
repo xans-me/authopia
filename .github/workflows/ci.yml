@@ -39,12 +39,13 @@ jobs:
           token: ${{ secrets.GIT_PASSWORD }}
       - name: modify the image
         run: |
-          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.run_number }}'|' values.yaml 
+          cd helm
+          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.run_number }}'|' values.yaml
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add values.yaml
           git commit -m 'Done by Github Actions Job changemanifest: ${{ github.run_number }}'
-          git push origin main  
+          git push origin main
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
