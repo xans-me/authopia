@@ -9,6 +9,8 @@ import (
 	"github.com/xans-me/authopia/core/db"
 	"github.com/xans-me/authopia/core/environment"
 	"github.com/xans-me/authopia/core/logger"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 )
 
@@ -44,4 +46,8 @@ func ProvideLogger(env environment.AppEnvironment) *logrus.Logger {
 // ProvideKeycloakConfig is a function to provide keycloak environment
 func ProvideKeycloakConfig(conf *configuration.AppConfig) configuration.KeyCloak {
 	return conf.KeyCloak
+}
+
+func ProvideTracer() trace.Tracer {
+	return otel.Tracer("authopia-tracer")
 }

@@ -7,13 +7,18 @@
 package app
 
 import (
+	"context"
 	"database/sql"
 	"github.com/google/wire"
 	"github.com/sirupsen/logrus"
 	"github.com/xans-me/authopia/core/configuration"
 	"github.com/xans-me/authopia/core/environment"
+	"github.com/xans-me/authopia/core/obs"
 	"google.golang.org/grpc"
+	"log"
 	"net"
+	"os"
+	"os/signal"
 )
 
 // Injectors from configWire.go:
@@ -107,5 +112,20 @@ var (
 		ProvideGRPC,
 		ProvideListener,
 		ProvideKeycloakConfig,
+		ProvideTracer,
 	)
 )
+
+func InjectProvider() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+	shutdown, err := obs.InitProvider()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		if err := shutdown(ctx); err != nil {
+			log.Fatal("failed to shutdown TracerProvider: %w", err)
+		}
+	}()
+}
