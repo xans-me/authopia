@@ -4,7 +4,7 @@ app:
   host: 0.0.0.0
   debug: true
   port: 9090
-  protocol: tcp4
+  protocol: tcp
 keyCloak:
   baseUrlAuth: http://localhost:8080
   Realm: "aphrodite-iam"
