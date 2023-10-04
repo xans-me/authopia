@@ -1,4 +1,4 @@
-name: Golang Pipeline
+name: Golang Continue Integration
 
 on:
   push:
@@ -33,13 +33,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: changing the deployment of git repo
+        name: Changing the deployment of git repo
         with:
           repository: 'xans-cd/authopia-helm'
           token: ${{ secrets.GIT_PASSWORD }}
       - name: modify the image
         run: |
-          cd helm
+          cd helm-authopia
           sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.run_number }}'|' values.yaml
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
