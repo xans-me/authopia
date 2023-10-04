@@ -32,7 +32,7 @@ RUN apk update && apk add --no-cache tzdata ca-certificates curl && \
 
 COPY --from=builder /app/authopia/main /app/authopia/main
 COPY --from=builder /app/authopia/env /app/authopia/env
-COPY --from=builder /app/authopia/infrastructure /app/authopia/infrastructure
+COPY --from=builder /app/authopia/core /app/authopia/core
 
 
 EXPOSE 3000
