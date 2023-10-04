@@ -8,32 +8,26 @@ import (
 // loggerOptions models struct
 type loggerOptions struct {
 	basePath         string
-	stagingPrefix    string
-	productionPrefix string
-	devPrefix        string
-	devLevel         logrus.Level
-	stagingLevel     logrus.Level
-	productionLevel  logrus.Level
+	releasePrefix string
+	sandboxPrefix        string
+	sandboxLevel         logrus.Level
+	releaseLevel  logrus.Level
 	fileTemplate     string
 }
 
 func (options *loggerOptions) getPrefix(env environment.AppEnvironment) string {
-	if env.IsDev() {
-		return options.devPrefix
-	} else if env.IsStaging() {
-		return options.stagingPrefix
+	if env.IsSandbox() {
+		return options.sandboxPrefix
 	} else {
-		return options.productionPrefix
+		return options.releasePrefix
 	}
 }
 
 func (options *loggerOptions) getLevel(env environment.AppEnvironment) logrus.Level {
-	if env.IsDev() {
-		return options.devLevel
-	} else if env.IsStaging() {
-		return options.stagingLevel
+	if env.IsSandbox() {
+		return options.sandboxLevel
 	} else {
-		return options.productionLevel
+		return options.releaseLevel
 	}
 }
 
@@ -54,12 +48,10 @@ func (options *loggerOptions) apply(setters []loggerOption) {
 func createDefaultOptions() *loggerOptions {
 	return &loggerOptions{
 		basePath:         "./logs",
-		stagingPrefix:    "staging",
-		productionPrefix: "prod",
-		devPrefix:        "dev",
+		releasePrefix: "release",
+		sandboxPrefix:        "sandbox",
 		fileTemplate:     "app_%Y-%m-%d-%H%M.log",
-		devLevel:         logrus.DebugLevel,
-		stagingLevel:     logrus.InfoLevel,
-		productionLevel:  logrus.InfoLevel,
+		sandboxLevel:         logrus.DebugLevel,
+		releaseLevel:  logrus.InfoLevel,
 	}
 }

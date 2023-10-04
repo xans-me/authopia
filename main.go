@@ -33,7 +33,7 @@ func main() {
 
 	log.Info("############################")
 	log.Info("AUTHOPIA")
-	log.Info("Your app is running in", config.App.Environment, "mode")
+	log.Info("Your app is running in ", config.App.Environment, " mode")
 	log.Info("############################")
 
 	// JSON Marshalling options

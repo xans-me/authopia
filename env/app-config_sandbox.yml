@@ -1,6 +1,6 @@
 app:
   name: AUTHOPIA
-  environment: local
+  environment: sandbox
   host: 0.0.0.0
   debug: true
   port: 9090

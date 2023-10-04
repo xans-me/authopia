@@ -9,27 +9,17 @@ import (
 
 type AppEnvironment string
 
-func (env AppEnvironment) IsLocal() bool {
-	return env == LOCAL
+func (env AppEnvironment) IsSandbox() bool {
+	return env == SANDBOX
 }
 
-func (env AppEnvironment) IsDev() bool {
-	return env == DEV
-}
-
-func (env AppEnvironment) IsStaging() bool {
-	return env == STAGING
-}
-
-func (env AppEnvironment) IsProd() bool {
-	return env == PROD
+func (env AppEnvironment) IsRelease() bool {
+	return env == RELEASE
 }
 
 const (
-	LOCAL   AppEnvironment = "local"
-	DEV                    = "development"
-	PROD                   = "production"
-	STAGING                = "staging"
+	SANDBOX   AppEnvironment = "sandbox"
+	RELEASE                    = "release"
 )
 
 var (
@@ -49,18 +39,13 @@ func FromOsEnv() (AppEnvironment, error) {
 	if strEnv == "" {
 		strEnv = strings.Trim(strings.ToLower(os.Getenv("APP_ENV")), " ")
 		if flag.Lookup("env") == nil {
-			strEnv = getEnvFlag("env", "", "env Mode project local, development, staging, production")
+			strEnv = getEnvFlag("env", "", "env Mode project sandbox / release")
 		}
 	}
 
 	switch strEnv {
-	case "development":
-		return DEV, nil
-	case "production":
-		return PROD, nil
-	case "staging":
-		return STAGING, nil
-	}
-
-	return LOCAL, nil
+	case "release":
+		return RELEASE, nil
+}
+	return SANDBOX, nil
 }
