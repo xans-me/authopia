@@ -3,8 +3,8 @@ app:
   environment: sandbox
   host: 0.0.0.0
   debug: true
-  port: 9090
-  protocol: tcp
+  port: 3000
+  protocol: tcp4
 keyCloak:
   baseUrlAuth: http://localhost:8080
   Realm: "aphrodite-iam"
